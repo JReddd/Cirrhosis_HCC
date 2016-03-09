@@ -1,0 +1,16 @@
+function [ features ] = Features( a,fea )
+
+s = size(fea,2);
+features = zeros(s,60);
+
+for j=1:60
+    for i = 1:s 
+        AREA =  a( fea(1,i): fea(2,i), fea(3,i): fea(4,i),j);
+        features(i,j) = sum(sum(AREA));
+    end
+
+end
+
+end
+
+
