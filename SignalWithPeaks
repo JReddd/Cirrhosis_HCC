@@ -1,0 +1,10 @@
+function [  ] = SignalWithPeaks( thr,loc )
+
+imagesc(thr);
+axis xy;
+title('Signal with peaks');
+hold on;
+scatter(loc(1,:),loc(2,:),'r.');
+
+end
+
