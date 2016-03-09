@@ -1,0 +1,17 @@
+function [ p ] = Mann_Whitney( FeatureList_Cir,FeatureList_HCC)
+
+Cir = FeatureList_Cir;
+HCC = FeatureList_HCC;
+
+m=size(Cir,1);
+p = zeros(1,m);
+
+for i = 1:m
+    p(1,i) = ranksum(Cir(i,:),HCC(i,:));
+end
+
+figure;hist(p);
+title('histogram of P');
+
+end
+
