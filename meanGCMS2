@@ -1,0 +1,87 @@
+function [AVE,a] = meanGCMS2()
+%the 1st variable AVE is the mean of all GCMS
+%the 2nd variable 'a' is the 3d arrays of data GCMS
+fileDir = '\\ufs02\user04\SGNCHEN3\Desktop7\GCMS\';
+
+fileName = {'Cirhosis_C_4073.ncdf'; .../ 
+'Cirhosis_C_4595.ncdf'; .../ 
+'Cirhosis_C_4597.ncdf'; .../ 
+'Cirhosis_C_5592.ncdf'; .../ 
+'Cirrhosis_C_3708.ncdf'; .../
+'Cirrhosis_C_3734.ncdf'; .../
+'Cirrhosis_C_3745.ncdf'; .../
+'Cirrhosis_C_4050.ncdf'; .../
+'Cirrhosis_C_4058.ncdf'; .../
+'Cirrhosis_C_4065.ncdf'; .../
+'Cirrhosis_C_4075.ncdf'; .../
+'Cirrhosis_C_4077.ncdf'; .../
+'Cirrhosis_C_4090.ncdf'; .../
+'Cirrhosis_C_4501.ncdf'; .../
+'Cirrhosis_C_4505.ncdf'; .../
+'Cirrhosis_C_4507.ncdf'; .../
+'Cirrhosis_C_4509.ncdf'; .../
+'Cirrhosis_C_4592.ncdf'; .../
+'Cirrhosis_C_4751.ncdf'; .../
+'Cirrhosis_C_4753.ncdf'; .../
+'Cirrhosis_C_4755.ncdf'; .../
+'Cirrhosis_C_4757.ncdf'; .../
+'Cirrhosis_C_4779.ncdf'; .../
+'Cirrhosis_C_4781.ncdf'; .../
+'Cirrhosis_C_4783.ncdf'; .../
+'Cirrhosis_C_4785.ncdf'; .../
+'Cirrhosis_C_4796.ncdf'; .../
+'Cirrhosis_C_5545.ncdf'; .../
+'Cirrhosis_C_5556.ncdf'; .../
+'Cirrhosis_C_5566.ncdf'; .../
+'Cirrhosis_C_5594.ncdf'; .../
+'Cirrhosis_C_5596.ncdf'; .../
+'Cirrhosis_C_6202.ncdf'; .../
+'HCC_H_3319.ncdf'; .../      
+'HCC_H_3323.ncdf'; .../      
+'HCC_H_3325.ncdf'; .../      
+'HCC_H_3327.ncdf'; .../      
+'HCC_H_3331.ncdf'; .../      
+'HCC_H_3704.ncdf'; .../      
+'HCC_H_3712.ncdf'; .../      
+'HCC_H_3721.ncdf'; .../      
+'HCC_H_3731.ncdf'; .../      
+'HCC_H_3737.ncdf'; .../      
+'HCC_H_3739.ncdf'; .../      
+'HCC_H_3743.ncdf'; .../      
+'HCC_H_4071.ncdf'; .../      
+'HCC_H_4088.ncdf'; .../      
+'HCC_H_4098.ncdf'; .../      
+'HCC_H_4514.ncdf'; .../      
+'HCC_H_4531.ncdf'; .../      
+'HCC_H_4538.ncdf'; .../      
+'HCC_H_4546.ncdf'; .../      
+'HCC_H_4766.ncdf'; .../      
+'HCC_H_4768.ncdf'; .../      
+'HCC_H_5548.ncdf'; .../      
+'HCC_H_5584.ncdf'; .../      
+'HCC_H_5587.ncdf'; .../      
+'HCC_H_6614.ncdf'; .../      
+'HCC_H_6882.ncdf'; .../      
+'HCC_H_7087.ncdf'};
+
+a = zeros(7598,681,60);
+for i = 1 : 60
+x = [fileDir, cell2mat(fileName(i))];
+a(:,:,i) = ncread(x,'spectraMat');
+end
+
+% Log transform:
+%a = log2(a);
+
+ave = mean(a, 3);
+AVE = log2(ave);
+
+for m=1:7598
+    for n=1:681
+        if AVE(m,n)<0
+            AVE(m,n)=0;
+        end
+    end
+end
+
+end
