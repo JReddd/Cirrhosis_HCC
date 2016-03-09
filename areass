@@ -1,0 +1,36 @@
+
+function [ fea ] = areass( mean,loc )
+
+s1 = size(loc,2);
+s2 = size(mean,2);
+s3 = size(mean,1);
+fea = zeros(4,s1);
+
+for i = 1:s1
+    m = loc(1,i);
+    n = loc(2,i);
+    if m-1>0 
+        m1=m-1;
+    else
+        m1=m;
+    end
+    if m+1<s2 
+        m2=m+1;
+    else
+        m2=m;
+    end
+    if n-1>0 
+        n1=n-1;
+    else
+        n1=n; 
+    end
+    if n+1<s3 
+        n2=n+1;
+    else
+        n2=n-2;
+    end
+        aa = ([n1,n2,m1,m2]);
+        fea(:,i) = aa;
+end
+end
+
