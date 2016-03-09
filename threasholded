@@ -1,0 +1,47 @@
+function [ threasholdedSignal ] = threasholded( signal, threashold )
+
+waveletName = 'db2';
+figure;imagesc(signal);axis xy; title('Signal');
+[ca1,ch1,cv1,cd1] = dwt2(signal,waveletName);
+[ca2,ch2,cv2,cd2] = dwt2(ca1,waveletName);
+[ca3,ch3,cv3,cd3] = dwt2(ca2,waveletName);
+[ca4,ch4,cv4,cd4] = dwt2(ca3,waveletName);
+[ca5,ch5,cv5,cd5] = dwt2(ca4,waveletName);
+icd5 = wthresh (cd5,'s',threashold);
+icv5 = wthresh (cv5,'s',threashold);
+ich5 = wthresh (ch5,'s',threashold);
+
+ica4 = idwt2(ca5, ich5, icv5, icd5, 'db2');
+icd4 = wthresh (cd4,'s',threashold);
+icv4 = wthresh (cv4,'s',threashold);
+ich4 = wthresh (ch4,'s',threashold);
+
+ica4(:,1)=[];
+ica4(1,:)=[];
+ica3 = idwt2(ica4, ich4, icv4, icd4, waveletName);
+ica3(1,:)=[];
+icd3 = wthresh (cd3,'s',threashold);
+icv3 = wthresh (cv3,'s',threashold);
+ich3 = wthresh (ch3,'s',threashold);
+
+ica3(:,1)=[];
+ica3(952,:)=0;
+%ich3(1,:)=[];
+%icd3(1,:)=[];
+%icv3(1,:)=[];
+ica2 = idwt2(ica3,ich3,icv3,icd3,waveletName);
+icd2 = wthresh (cd2,'s',threashold);
+icv2 = wthresh (cv2,'s',threashold);
+ich2 = wthresh (ch2,'s',threashold);
+
+ica2(1,:)=[];
+
+ica1 = idwt2(ica2,ich2,icv2,icd2,waveletName);
+icd1 = wthresh (cd1,'s',threashold);
+icv1 = wthresh (cv1,'s',threashold);
+ich1 = wthresh (ch1,'s',threashold);
+
+threasholdedSignal = idwt2(ica1,ich1,icv1,icd1,waveletName);
+figure;imagesc(threasholdedSignal);axis xy;title('ThreasholdedSignal');
+end
+
